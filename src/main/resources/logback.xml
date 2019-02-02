@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OFF > FATAL > ERROR > WARN > INFO > DEBUG > TRACE > ALL -->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+    <property name="rollingPolicy.fileNamePattern.prefix" value="F:/Data/Logs/DuerOs/%d{yyyy-MM-dd}/duerOs-"/>
+    <property name="rollingPolicy.fileNamePattern.suffix" value="-%i.log"/>
+
+    <!-- 30 Days -->
+    <property name="rollingPolicy.maxHistory" value="30"/>
+    <property name="rollingPolicy.MaxFileSize" value="5MB"/>
+
+    <property name="encoder.pattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"/>
+    <property name="encoder.charset" value="UTF-8"/>
+
+    <property name="root.level" value="debug"/>
+
+    <!--File output-->
+
+    <!--
+    ch.qos.logback.core.rolling.RollingFileAppender
+        logback的文件滚动追加适配
+
+    ch.qos.logback.classic.filter.LevelFilter
+        logback日志级别过滤器
+
+    ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy
+        logback的【时间文件大小】滚动策略
+
+    -->
+
+    <!-- ERROR级别日志 -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${rollingPolicy.fileNamePattern.prefix}error${rollingPolicy.fileNamePattern.suffix}
+            </fileNamePattern>
+            <maxHistory>${rollingPolicy.maxHistory}</maxHistory>
+            <MaxFileSize>${rollingPolicy.MaxFileSize}</MaxFileSize>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>${encoder.charset}</charset>
+            <pattern>${encoder.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${rollingPolicy.fileNamePattern.prefix}warn${rollingPolicy.fileNamePattern.suffix}
+            </fileNamePattern>
+            <maxHistory>${rollingPolicy.maxHistory}</maxHistory>
+            <MaxFileSize>${rollingPolicy.MaxFileSize}</MaxFileSize>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>${encoder.charset}</charset>
+            <pattern>${encoder.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${rollingPolicy.fileNamePattern.prefix}info${rollingPolicy.fileNamePattern.suffix}
+            </fileNamePattern>
+            <maxHistory>${rollingPolicy.maxHistory}</maxHistory>
+            <MaxFileSize>${rollingPolicy.MaxFileSize}</MaxFileSize>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>${encoder.charset}</charset>
+            <pattern>${encoder.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="DEBUG" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${rollingPolicy.fileNamePattern.prefix}debug${rollingPolicy.fileNamePattern.suffix}
+            </fileNamePattern>
+            <maxHistory>${rollingPolicy.maxHistory}</maxHistory>
+            <MaxFileSize>${rollingPolicy.MaxFileSize}</MaxFileSize>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>${encoder.charset}</charset>
+            <pattern>${encoder.pattern}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="TRACE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>TRACE</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>
+                ${rollingPolicy.fileNamePattern.prefix}trace{rollingPolicy.fileNamePattern.suffix}
+            </fileNamePattern>
+            <maxHistory>${rollingPolicy.maxHistory}</maxHistory>
+            <MaxFileSize>${rollingPolicy.MaxFileSize}</MaxFileSize>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>${encoder.charset}</charset>
+            <pattern>${encoder.pattern}</pattern>
+        </encoder>
+    </appender>
+    <!--/File output-->
+
+    <!--Console output-->
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <charset>${encoder.charset}</charset>
+            <pattern>${encoder.pattern}</pattern>
+        </encoder>
+    </appender>
+    <!--/Console output-->
+
+    <root>
+        <level value="${root.level}"/>
+        <!-- File output -->
+        <appender-ref ref="ERROR"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="WARN"/>
+        <appender-ref ref="DEBUG"/>
+        <appender-ref ref="TRACE"/>
+
+        <!--Console output-->
+        <appender-ref ref="Console"/>
+    </root>
+
+</configuration>

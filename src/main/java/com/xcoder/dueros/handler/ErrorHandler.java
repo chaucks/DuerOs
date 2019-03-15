@@ -1,9 +1,6 @@
 package com.xcoder.dueros.handler;
 
 import io.vertx.core.Handler;
-import io.vertx.core.http.HttpServerResponse;
-import io.vertx.core.logging.Logger;
-import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.RoutingContext;
 
 /**
@@ -13,15 +10,11 @@ import io.vertx.ext.web.RoutingContext;
  */
 public class ErrorHandler implements Handler<RoutingContext> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ErrorHandler.class);
-
     @Override
-    public void handle(RoutingContext routingContext) {
-        int statusCode = routingContext.statusCode();
+    public void handle(RoutingContext ctx) {
 
-        LOGGER.debug("statusCode:" + statusCode);
+        ctx.response().setStatusCode(404).putHeader("content-type", "text/html;charset=utf-8").sendFile(ctx.pathParam("page"));
 
-        HttpServerResponse response = routingContext.response();
-        response.setStatusCode(statusCode).end("~Oops服务器开小差了");
+//        ctx.response().setStatusCode(404).end("~Oops服务器开小差了");
     }
 }

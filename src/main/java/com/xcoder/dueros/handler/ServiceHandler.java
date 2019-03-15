@@ -1,15 +1,14 @@
 package com.xcoder.dueros.handler;
 
-import com.xcoder.dueros.service.TestBotService;
+import com.xcoder.dueros.baidu.MyTaxBotApi;
 import io.vertx.core.Handler;
-import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.LoggerFactory;
 import io.vertx.ext.web.RoutingContext;
 
 /**
- * Bot service
+ * Service handler 业务handler
  *
  * @author Chuck Lee
  */
@@ -18,25 +17,28 @@ public class ServiceHandler implements Handler<RoutingContext> {
     private static final Logger LOGGER = LoggerFactory.getLogger(ServiceHandler.class);
 
     @Override
-    public void handle(RoutingContext routingContext) {
-        HttpServerResponse response = routingContext.response();
-        routingContext.vertx().executeBlocking(future -> {
+    public void handle(RoutingContext ctx) {
+        HttpServerResponse res = ctx.response();
+        ctx.vertx().executeBlocking(f -> {
             try {
-                Object object = new TestBotService().selectObject(routingContext);
-                byte[] bytes = ((String) object).getBytes();
+                // 这里用简单的代码代替真实环境的service业务调用调用
+                // XxxService.doSomething...;
 
-                future.complete(bytes);
+                String requestId = "gyua2o123ksu7y5b41";
+                String timestamp = System.currentTimeMillis() + "";
+                String rst = MyTaxBotApi.run("", "", requestId, timestamp, null, null);
+
+                f.complete(rst);
             } catch (Throwable t) {
-                t.printStackTrace();
-                future.fail(t);
+                f.fail(t);
             }
-        }, res -> {
-            if (res.succeeded()) {
-                response.end(Buffer.buffer((byte[]) res.result()));
-            } else {
-                LOGGER.error(res.cause());
-                response.end("服务器开小差了");
+        }, r -> {
+            if (r.succeeded()) {
+                res.end((String) r.result());
+                return;
             }
+            LOGGER.error(r.cause());
+            res.end("服务器开小差了");
         });
     }
 }

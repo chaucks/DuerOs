@@ -56,6 +56,11 @@
             <version>3.6.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>io.vertx</groupId>
+            <artifactId>vertx-auth-common</artifactId>
+            <version>3.6.3</version>
+        </dependency>
     </dependencies>
 
     <build>

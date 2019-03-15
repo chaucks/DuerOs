@@ -21,7 +21,7 @@ public class ServiceHandler implements Handler<RoutingContext> {
         HttpServerResponse res = ctx.response();
         ctx.vertx().executeBlocking(f -> {
             try {
-                // 这里用简单的代码代替真实环境的service业务调用调用
+                // 这里用简单的代码代替真实环境的service业务调用
                 // XxxService.doSomething...;
 
                 String requestId = "gyua2o123ksu7y5b41";

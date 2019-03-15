@@ -87,7 +87,7 @@ public class MyTaxBotApi {
     }
 
     /**
-     * Jackson对象序列化成字符串
+     * 对象序列化（Jackson）成字符串
      *
      * @param value value任意java对象
      * @return
